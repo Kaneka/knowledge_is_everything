@@ -1,0 +1,41 @@
+package net.kaneka.knowledgeiseverything.block;
+
+import net.kaneka.knowledgeiseverything.Main;
+import net.kaneka.knowledgeiseverything.gui.GuiHandler;
+import net.kaneka.knowledgeiseverything.registry.ModCreativeTabs;
+import net.kaneka.knowledgeiseverything.tileentity.TileEntityBlueprintWorkbench;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockContainer;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+
+public class BlockBlueprintWorkbench extends BlockContainer{
+
+	public BlockBlueprintWorkbench() {
+		super(Material.WOOD);
+		this.setCreativeTab(ModCreativeTabs.TabBlocks);
+		this.setUnlocalizedName("combiningtable");
+	}
+	
+	@Override
+	public boolean onBlockActivated(World worldIn, BlockPos pos,IBlockState state, EntityPlayer playerIn, EnumHand hand,EnumFacing facing, float hitX, float hitY, float hitZ) {
+		if(!worldIn.isRemote)
+		{
+				playerIn.openGui(Main.instance, GuiHandler.GUI_ENUM.GUI_CombiningTable.ordinal(), worldIn, pos.getX(), pos.getY(), pos.getZ());
+		}
+		return false;
+	}
+
+	@Override
+	public TileEntity createNewTileEntity(World worldIn, int meta)
+	{
+		return new TileEntityBlueprintWorkbench();
+	}
+}
